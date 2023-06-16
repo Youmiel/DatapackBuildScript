@@ -97,8 +97,8 @@ MAKO_HEADER = '.hamko'
 
 
 def run(template_dir: str = TEMPLATE_DIR, target_dir: str = TARGET_DIR):
-    shutil.rmtree(TARGET_DIR, ignore_errors=False)
-    template_path_list = scan_folder(TEMPLATE_DIR, log=False)
+    shutil.rmtree(target_dir, ignore_errors=False)
+    template_path_list = scan_folder(template_dir, log=False)
 
     template_lookup = TemplateLookup(directories=["./"])
     for template_file in template_path_list:
@@ -106,8 +106,8 @@ def run(template_dir: str = TEMPLATE_DIR, target_dir: str = TARGET_DIR):
         if ext == MAKO_EXT:
             real_filename = filename
             relative_dir = os.path.relpath(
-                os.path.dirname(template_file), start=TEMPLATE_DIR)
-            target_file = os.path.join(TARGET_DIR, relative_dir, real_filename)
+                os.path.dirname(template_file), start=template_dir)
+            target_file = os.path.join(target_dir, relative_dir, real_filename)
 
             template = Template(filename=template_file, lookup=template_lookup)
             content = template.render()
@@ -118,8 +118,8 @@ def run(template_dir: str = TEMPLATE_DIR, target_dir: str = TARGET_DIR):
         else:
             real_filename = os.path.basename(template_file)
             relative_dir = os.path.relpath(
-                os.path.dirname(template_file), start=TEMPLATE_DIR)
-            target_file = os.path.join(TARGET_DIR, relative_dir, real_filename)
+                os.path.dirname(template_file), start=template_dir)
+            target_file = os.path.join(target_dir, relative_dir, real_filename)
 
             check_before_create(
                 target_file, is_directory=False, overwrite=True)
