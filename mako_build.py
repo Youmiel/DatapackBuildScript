@@ -95,7 +95,8 @@ TARGET_DIR = 'data/'
 MAKO_EXT = '.mako'
 MAKO_HEADER = '.hamko'
 
-def run():
+
+def run(template_dir: str = TEMPLATE_DIR, target_dir: str = TARGET_DIR):
     shutil.rmtree(TARGET_DIR, ignore_errors=False)
     template_path_list = scan_folder(TEMPLATE_DIR, log=False)
 
@@ -125,6 +126,7 @@ def run():
             shutil.copyfile(template_file, target_file)
 
     print("BUILD SUCCESS")
+
 
 if __name__ == '__main__':
     run()
