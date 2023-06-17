@@ -111,7 +111,8 @@ def run(template_dir: str = TEMPLATE_DIR, target_dir: str = TARGET_DIR):
             target_file = os.path.join(target_dir, relative_dir, real_filename)
 
             template = Template(filename=template_file, lookup=template_lookup)
-            content = template.render()
+            content = template.render().strip('\n')
+            content = re.sub('\n{2}\n+', '\n\n', content)
 
             check_and_write_file(target_file, content, overwrite=True)
         elif ext == MAKO_HEADER:
