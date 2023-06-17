@@ -93,11 +93,12 @@ def check_and_write_file(path: str, content: Union[str, bytes], overwrite: bool 
 TEMPLATE_DIR = 'src/'
 TARGET_DIR = 'data/'
 MAKO_EXT = '.mako'
-MAKO_HEADER = '.hamko'
+MAKO_HEADER = '.hmako'
 
 
 def run(template_dir: str = TEMPLATE_DIR, target_dir: str = TARGET_DIR):
-    shutil.rmtree(target_dir, ignore_errors=False)
+    if os.path.exists(target_dir):
+        shutil.rmtree(target_dir, ignore_errors=False)
     template_path_list = scan_folder(template_dir, log=False)
 
     template_lookup = TemplateLookup(directories=["./"])
