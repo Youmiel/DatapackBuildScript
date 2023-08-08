@@ -96,7 +96,7 @@ MAKO_EXT = '.mako'
 MAKO_HEADER = '.hmako'
 
 
-def run(template_dir: str = TEMPLATE_DIR, target_dir: str = TARGET_DIR):
+def run(template_dir: str = TEMPLATE_DIR, target_dir: str = TARGET_DIR, ignore_ext: List[str] = []):
     if os.path.exists(target_dir):
         shutil.rmtree(target_dir, ignore_errors=False)
     template_path_list = scan_folder(template_dir, log=False)
@@ -115,7 +115,7 @@ def run(template_dir: str = TEMPLATE_DIR, target_dir: str = TARGET_DIR):
             content = re.sub('\n{2}\n+', '\n\n', content)
 
             check_and_write_file(target_file, content, overwrite=True)
-        elif ext == MAKO_HEADER:
+        elif ext == MAKO_HEADER or ext in ignore_ext:
             pass
         else:
             real_filename = os.path.basename(template_file)
